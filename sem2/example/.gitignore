@@ -1,0 +1,12 @@
+build/
+cmake-build-*/
+
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+*.o
+*.a
+*.so
+*.dylib
