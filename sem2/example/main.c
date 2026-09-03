@@ -9,6 +9,11 @@
 #define MESSAGE "release"
 #endif
 
+double global_init_var = 1;
+float global_var;
+
+static int static_global_var = 2;
+
 int main()
 {
     int x = 7;
@@ -19,6 +24,8 @@ int main()
     printf("%d divide %d is %d\n", y, z, divide(y, z));
     
     printf("%s\n", MESSAGE);
+
+    static int static_local_var = 3;
 
     return 0;
 }
