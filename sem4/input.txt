@@ -1,0 +1,6 @@
+LOGIN alice
+ERROR 42 connection_lost
+PURCHASE 123 1990
+LOGIN bob
+ERROR 17 timeout
+veeeeeeeryyyyyyy looooooong striiiiiiiing
