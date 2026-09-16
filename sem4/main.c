@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// !
 char* read_line(void) 
 {
     size_t capacity = 16;
@@ -65,9 +64,14 @@ void string_vector_init(struct StringVector *v)
     v->capacity = 0;
 }
 
-// !
+
 void string_vector_destroy(struct StringVector *v) 
 {
+    // do not forget to free strings themselves
+    for (size_t i = 0; i < v->size; ++i) {
+        free(v->data[i]);
+    }
+
     free(v->data);
 
     v->data = NULL;
@@ -75,7 +79,6 @@ void string_vector_destroy(struct StringVector *v)
     v->capacity = 0;
 }
 
-// !
 // return 1 if successful, 0 otherwise
 int string_vector_reserve(struct StringVector *v, size_t new_capacity) 
 {
@@ -84,6 +87,21 @@ int string_vector_reserve(struct StringVector *v, size_t new_capacity)
     }
 
     // write code here
+    // allocate memory for string pointers
+    char* *tmp = realloc(
+        v->data,
+        new_capacity * sizeof(*v->data)
+    );
+
+    // check return value
+    if (tmp == NULL) {
+        return 0;
+    }
+
+    v->data = tmp;
+    v->capacity = new_capacity;
+
+    return 1;
 }
 
 int string_vector_push(struct StringVector *v, char *string) 
@@ -110,12 +128,6 @@ void string_vector_print(const struct StringVector *v)
         printf("%zu: %s\n", i, v->data[i]);
     }
 }
-
-
-enum {
-    EXIT_SUCCESS,
-    EXIT_FAILURE
-};
 
 
 int main(void) 
