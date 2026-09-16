@@ -98,3 +98,5 @@ gcc -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer heap_case_2.c
 gcc -g -O1 -fsanitize=address,leak -fno-omit-frame-pointer heap_case_3.c
 ./a.out
 ```
+
+## Вырванивания и отступы в структурах
