@@ -100,3 +100,70 @@ gcc -g -O1 -fsanitize=address,leak -fno-omit-frame-pointer heap_case_3.c
 ```
 
 ## Вырванивания и отступы в структурах
+
+## Объединения
+
+Ещё раз посмотрим на возможное содержимое журнала:
+```
+LOGIN alice
+ERROR 42 connection_lost
+PURCHASE 123 1990
+LOGIN bob
+ERROR 17 timeout
+```
+
+У нас есть разные виды событий:
+- LOGIN
+- ERROR
+- PURCHASE
+
+При этом у каждого вида событий есть свои данные:
+- LOGIN: имя пользователя
+- ERROR: сообщение об ошибке и код
+- PURCHASE: ID продукта и цена
+
+Как наивно можно хранить эти данные:
+```
+struct EventBad {
+    int type;
+
+    char *username;
+
+    int error_code;
+    char *error_message;
+
+    int product_id;
+    int price;
+};
+```
+
+Но это расточительно по памяти. Решение - `union`:
+```
+enum EventType {
+    EVENT_NONE = 0,
+    EVENT_LOGIN,
+    EVENT_ERROR,
+    EVENT_PURCHASE
+};
+
+struct Event {
+    uint64_t timestamp;
+    enum EventType type;
+
+    union {
+        struct {
+            char *username;
+        } login;
+
+        struct {
+            int code;
+            char *message;
+        } error;
+
+        struct {
+            int product_id;
+            int price;
+        } purchase;
+    } data;
+};
+```

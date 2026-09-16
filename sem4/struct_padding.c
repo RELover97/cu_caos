@@ -17,6 +17,15 @@ int main(void) {
     printf("sizeof(struct Example) = %zu\n",
            sizeof(struct Example));
 
+    printf("_Alignof(char) = %zu\n",
+           _Alignof(char));
+
+    printf("_Alignof(int) = %zu\n",
+           _Alignof(int));
+
+    printf("_Alignof(double) = %zu\n",
+           _Alignof(double));
+
     printf("_Alignof(struct Example) = %zu\n",
            _Alignof(struct Example));
 
